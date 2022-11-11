@@ -46,20 +46,19 @@
       <tr>
         <th scope="col">Nombre</th>
         <th scope="col">Descripción</th>
-        <th scope="col">Inventario</th>
         <th scope="col">Precio</th>
-        <th scope="col">Acción</th>
+        <th scope="col">Inventario</th>
         <th scope="col">Acción</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td ></td>
-        <td ></td>
-        <td ></td>
-        <td ></td>
-        <td><a  class="btn btn-warning" href="">Editar</a> </td>
-        <td><a  class="btn btn-danger" href="">Eliminar</a> </td>
+       <tr th:each="producto : ${productos}">
+        <td th:text="${producto.nombre}"></td>
+        <td th:text="${producto.descripcion}"></td>
+        <td th:text="${producto.precio}"></td>
+        <td th:text="${producto.cantidad}"></td>
+        <td><a  class="btn btn-warning" href="">Editar</a> 
+        <a  class="btn btn-danger" href="">Eliminar</a></td>
       </tr>       
     </tbody>
   </table>
