@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ecommerce.renzo.personal.controller.ProductoController;
 import com.ecommerce.renzo.personal.model.Producto;
 import com.ecommerce.renzo.personal.model.Usuario;
 import com.ecommerce.renzo.personal.repository.ProductoRepository;
@@ -24,7 +23,7 @@ public class ProductoServiceImpl implements ProductoService {
 	// lo recomendable  es usar un logger que nos indica todos los cambios que
 	//se realiza
 	//NOS AYUDA A VERIFICAR DONDE SE ENCUENTRAN LOS ERRORES DE MANERA PROFUNDA
-	private final Logger LOGGER = LoggerFactory.getLogger(ProductoController.class);
+	private  Logger LOGGER = LoggerFactory.getLogger(ProductoService.class);
 	
 	@Override
 	public Producto save(Producto producto) {
