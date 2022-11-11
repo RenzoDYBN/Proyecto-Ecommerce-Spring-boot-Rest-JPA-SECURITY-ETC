@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ecommerce.renzo.personal.model.Producto;
 import com.ecommerce.renzo.personal.model.Usuario;
@@ -18,6 +20,8 @@ public class ProductoServiceImpl implements ProductoService {
 	@Autowired
 	private ProductoRepository repositorio;
 	
+
+	
 	//Logger , para hacer pruebas en la parte del backend
 	//system.print con ello para saber si la variable llega 
 	// lo recomendable  es usar un logger que nos indica todos los cambios que
@@ -27,10 +31,7 @@ public class ProductoServiceImpl implements ProductoService {
 	
 	@Override
 	public Producto save(Producto producto) {
-		//la apertura de llaves format , en la cual vendra una variable u objeto
-		LOGGER.info("Este es el objeto producto {}",producto);
-		Usuario u =new Usuario(1, "", "", "", "", "", "", "");
-		producto.setUsuario(u);
+		
 		return repositorio.save(producto);
 	}
 
