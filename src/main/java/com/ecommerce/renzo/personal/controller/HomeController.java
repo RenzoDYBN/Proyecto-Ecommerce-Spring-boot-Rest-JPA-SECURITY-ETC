@@ -26,6 +26,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ecommerce.renzo.personal.model.DetalleOrden;
 import com.ecommerce.renzo.personal.model.Orden;
 import com.ecommerce.renzo.personal.model.Producto;
+import com.ecommerce.renzo.personal.model.Usuario;
+import com.ecommerce.renzo.personal.service.IUsuarioService;
 import com.ecommerce.renzo.personal.service.ProductoService;
 
 @Controller
@@ -38,7 +40,10 @@ public class HomeController {
 
 	@Autowired // permit inyectar una instancia de la clase ProductService.
 	private ProductoService servicios;
-
+	
+	@Autowired
+	private IUsuarioService uservice;
+	
 	// guardaremos una lista de detalles (detalles de la orden donde se alamacenera)
 	// Para almacenar los productos de la orden (o detalles de la orden)
 	List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
@@ -131,5 +136,13 @@ public class HomeController {
 		session.setAttribute("orden", orden);
 		return "redirect:/carritoListar";
 	}
+	
+	
+	@GetMapping("/order")
+	public String order(Model modelo) {
+		Usuario user = uservice.findById(1).get();
 
+		modelo.addAttribute("usuario", user);
+		return "usuario/resumenorden";
+	}
 }
