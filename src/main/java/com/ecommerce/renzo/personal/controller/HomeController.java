@@ -97,12 +97,15 @@ public class HomeController {
 		session.setAttribute("orden", orden);
 		LOGGER.info("viendo orden 2 {}", orden);
 
-		return "redirect:/req";
+		return "redirect:/carritoListar";
 	}
 
-	@GetMapping("/req")
-	public String productoHome(SessionStatus status, DetalleOrden detallorden, Orden orden) {
-
+	//PARA QUE SE MANTENGAN LOS DATOS SIEMPRE USAR session.setAttribute en las 
+	// 
+	@GetMapping("/carritoListar")
+	public String productoHomes(HttpSession session) {
+//		session.setAttribute("cart", detalles);
+//		session.setAttribute("orden", orden);
 		return "usuario/carrito";
 	}
 
@@ -116,6 +119,7 @@ public class HomeController {
 				ordenesNueva.add(detalleOrden);
 			}
 		}
+
 		// Lista nueva con los productos restantes
 		detalles = ordenesNueva;
 
@@ -125,7 +129,7 @@ public class HomeController {
 		orden.setTotal(sumaTotal);
 		session.setAttribute("cart", detalles);
 		session.setAttribute("orden", orden);
-		return "redirect:/req";
+		return "redirect:/carritoListar";
 	}
 
 }
