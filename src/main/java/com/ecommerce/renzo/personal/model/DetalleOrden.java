@@ -16,7 +16,7 @@ public class DetalleOrden {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nombre;
-	private Double cantidad;
+	private Integer cantidad;
 	private Double precio;
 	private Double total;
 	
@@ -53,10 +53,10 @@ public class DetalleOrden {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public Double getCantidad() {
+	public Integer getCantidad() {
 		return cantidad;
 	}
-	public void setCantidad(Double cantidad) {
+	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
 	public Double getPrecio() {
@@ -76,13 +76,13 @@ public class DetalleOrden {
 		return "DetalleOrden [id=" + id + ", nombre=" + nombre + ", cantidad=" + cantidad + ", precio=" + precio
 				+ ", total=" + total + "]";
 	}
-	public DetalleOrden(String nombre, Double cantidad, Double precio, Double total) {
+	public DetalleOrden(String nombre, Integer cantidad, Double precio, Double total) {
 		this.nombre = nombre;
 		this.cantidad = cantidad;
 		this.precio = precio;
 		this.total = total;
 	}
-	public DetalleOrden(Integer id, String nombre, Double cantidad, Double precio, Double total) {
+	public DetalleOrden(Integer id, String nombre, Integer cantidad, Double precio, Double total) {
 		this.id = id;
 		this.nombre = nombre;
 		this.cantidad = cantidad;

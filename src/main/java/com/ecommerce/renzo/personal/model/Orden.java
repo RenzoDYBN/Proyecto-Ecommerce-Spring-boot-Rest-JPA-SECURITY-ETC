@@ -20,6 +20,7 @@ public class Orden {
 	private String numero;
 	private Date fechaCreacion;
 	private Date fechaRecibida;
+	private Double total;
 	
 	@ManyToOne
 	private Usuario usuario;
@@ -31,6 +32,29 @@ public class Orden {
 	
 	
 	
+	public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, Double total, Usuario usuario,
+			DetalleOrden detalleorden) {
+		super();
+		this.id = id;
+		this.numero = numero;
+		this.fechaCreacion = fechaCreacion;
+		this.fechaRecibida = fechaRecibida;
+		this.total = total;
+		this.usuario = usuario;
+		this.detalleorden = detalleorden;
+	}
+	public Double getTotal() {
+		return total;
+	}
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+	public DetalleOrden getDetalleorden() {
+		return detalleorden;
+	}
+	public void setDetalleorden(DetalleOrden detalleorden) {
+		this.detalleorden = detalleorden;
+	}
 	public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, Usuario usuario) {
 		this.id = id;
 		this.numero = numero;
