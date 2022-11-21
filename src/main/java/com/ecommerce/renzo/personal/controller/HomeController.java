@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -181,4 +182,18 @@ public class HomeController {
 		detalles.clear();
 		return "redirect:/";
 	}	
+	
+	@PostMapping("/search")
+	public String buscar(@RequestParam String nombre, Model modelo) {
+		LOGGER.info("Nombre del producto: {}", nombre);
+		
+		
+		List<Producto> productos = servicios.listarProductos().stream()
+				.filter(p -> p.getNombre().toLowerCase().contains(nombre.toLowerCase()))
+				.collect(Collectors.toList());
+		modelo.addAttribute("productos",productos);
+		
+		
+		return "usuario/home";
+	}
 }

@@ -20,4 +20,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return urepositorio.findById(id);
 	}
 
+	@Override
+	public Usuario save(Usuario usuario) {
+		
+		return urepositorio.save(usuario);
+	}
+
 }
