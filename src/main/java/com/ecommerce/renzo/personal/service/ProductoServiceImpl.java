@@ -12,13 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ecommerce.renzo.personal.model.Producto;
 import com.ecommerce.renzo.personal.model.Usuario;
-import com.ecommerce.renzo.personal.repository.ProductoRepository;
+import com.ecommerce.renzo.personal.repository.IProductoRepository;
 
 @Service
 public class ProductoServiceImpl implements ProductoService {
 
 	@Autowired
-	private ProductoRepository repositorio;
+	private IProductoRepository repositorio;
 	
 
 	

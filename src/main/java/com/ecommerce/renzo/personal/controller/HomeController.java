@@ -1,6 +1,7 @@
 package com.ecommerce.renzo.personal.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,9 @@ import com.ecommerce.renzo.personal.model.DetalleOrden;
 import com.ecommerce.renzo.personal.model.Orden;
 import com.ecommerce.renzo.personal.model.Producto;
 import com.ecommerce.renzo.personal.model.Usuario;
+import com.ecommerce.renzo.personal.service.DetalleOrdenServiceImpl;
+import com.ecommerce.renzo.personal.service.IDetalleOrdenService;
+import com.ecommerce.renzo.personal.service.IOrdenService;
 import com.ecommerce.renzo.personal.service.IUsuarioService;
 import com.ecommerce.renzo.personal.service.ProductoService;
 
@@ -43,6 +47,13 @@ public class HomeController {
 	
 	@Autowired
 	private IUsuarioService uservice;
+	
+	@Autowired
+	private IOrdenService oservice;
+	
+	@Autowired
+	private IDetalleOrdenService detservice;
+	
 	
 	// guardaremos una lista de detalles (detalles de la orden donde se alamacenera)
 	// Para almacenar los productos de la orden (o detalles de la orden)
@@ -115,7 +126,7 @@ public class HomeController {
 	}
 
 	@GetMapping("/deleteCart/cart/{id}")
-	public String quitarEleemnto(HttpSession session, @PathVariable Integer id, Model modelo) {
+	public String quitarElemento(HttpSession session, @PathVariable Integer id, Model modelo) {
 		// lista nueva de productos
 		List<DetalleOrden> ordenesNueva = new ArrayList<DetalleOrden>();
 
@@ -145,4 +156,29 @@ public class HomeController {
 		modelo.addAttribute("usuario", user);
 		return "usuario/resumenorden";
 	}
+	
+	@GetMapping("/saveOrder")
+	public String saveOrder() {
+		Date fechaCreacion = new Date();
+		orden.setFechaCreacion(fechaCreacion);
+		orden.setNumero(oservice.generarNumeroOrden());
+		
+		//Usuario
+		Usuario user = uservice.findById(1).get();
+		
+		orden.setUsuario(user);
+		oservice.save(orden);
+		
+		
+		//Detalles
+		for(DetalleOrden dt:detalles) {
+			dt.setOrden(orden);
+			detservice.save(dt);
+		}
+		
+		//limpiar Lista y orden
+		orden = new Orden();
+		detalles.clear();
+		return "redirect:/";
+	}	
 }
