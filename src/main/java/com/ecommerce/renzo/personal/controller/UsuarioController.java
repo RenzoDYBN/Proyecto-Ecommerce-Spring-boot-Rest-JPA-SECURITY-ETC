@@ -1,5 +1,9 @@
 package com.ecommerce.renzo.personal.controller;
 
+import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,4 +37,35 @@ public class UsuarioController {
 		usuService.save(usuario);
 		return "redirect:/";
 	}
+	
+	@GetMapping("/login")
+	public String login() {
+//		usuService.findById(null)
+		
+		return "usuario/login";
+	}
+	
+	@PostMapping("/acceder")
+	public String acceder(Usuario usuario, HttpSession session){
+		logger.info("acceso {}",usuario);
+		
+		Optional<Usuario> user = usuService.findByEmail(usuario.getEmail());
+		logger.info("correo inf {}",user);
+		
+		//POR ESO ES BUENO TRABAJAR CON OPTIONAL SI HAY REGISTRO
+		//CON ESE EMAIL , PERMITE USAR el isPresent()
+		if(user.isPresent()) {
+			session.setAttribute("idUser", user.get().getId());
+			if(user.get().getTipo().equals("ADMIN")) {
+				return "redirect:/administrador";
+			}else {
+				return "redirect:/";
+			}
+		}else {
+			logger.info("Usuario no existe");
+		}
+		
+		return "redirect:/";
+	}
+	
 }

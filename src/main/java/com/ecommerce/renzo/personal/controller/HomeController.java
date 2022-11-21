@@ -64,8 +64,10 @@ public class HomeController {
 	Orden orden = new Orden();
 
 	@RequestMapping("")
-	public String mostar(Model modelo) {
+	public String mostar(Model modelo,HttpSession session) {
 		modelo.addAttribute("productos", servicios.listarProductos());
+		
+		LOGGER.info("obtener usuario {}",session.getAttribute("idUser"));
 		return "usuario/home";
 	}
 
@@ -151,21 +153,25 @@ public class HomeController {
 	
 	
 	@GetMapping("/order")
-	public String order(Model modelo) {
-		Usuario user = uservice.findById(1).get();
+	public String order(Model modelo, HttpSession session) {
+		
+		
+			//COMO ES UN OBJETO SE USA TOSTRING session .toString para
+			//parsear a integer
+		Usuario user = uservice.findById(Integer.parseInt(session.getAttribute("idUser").toString())).get();
 
 		modelo.addAttribute("usuario", user);
 		return "usuario/resumenorden";
 	}
 	
 	@GetMapping("/saveOrder")
-	public String saveOrder() {
+	public String saveOrder(HttpSession session) {
 		Date fechaCreacion = new Date();
 		orden.setFechaCreacion(fechaCreacion);
 		orden.setNumero(oservice.generarNumeroOrden());
 		
 		//Usuario
-		Usuario user = uservice.findById(1).get();
+		Usuario user = uservice.findById(Integer.parseInt(session.getAttribute("idUser").toString())).get();
 		
 		orden.setUsuario(user);
 		oservice.save(orden);

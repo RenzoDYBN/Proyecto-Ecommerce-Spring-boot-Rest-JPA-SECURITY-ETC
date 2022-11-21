@@ -3,6 +3,8 @@ package com.ecommerce.renzo.personal.controller;
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ecommerce.renzo.personal.model.Producto;
 import com.ecommerce.renzo.personal.model.Usuario;
+import com.ecommerce.renzo.personal.service.IUsuarioService;
 import com.ecommerce.renzo.personal.service.ProductoService;
 import com.ecommerce.renzo.personal.service.UploadFileService;
 
@@ -24,7 +27,10 @@ import com.ecommerce.renzo.personal.service.UploadFileService;
 public class ProductoController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(ProductoController.class);
-
+	
+	@Autowired
+	private IUsuarioService uservices;
+	
 	@Autowired
 	private ProductoService servicios;
 
@@ -43,11 +49,13 @@ public class ProductoController {
 	}
 
 	@PostMapping("/save")
-	public String save(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
+	public String save(HttpSession session , Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
 
 		// la apertura de llaves format , en la cual vendra una variable u objeto
 		LOGGER.info("Este es el objeto producto {}", producto);
-		Usuario u = new Usuario(1, "", "", "", "", "", "", "");
+		
+		//RECORDAR QUE TRAE UN OPTIONAL POR ESO USAR .get()
+		Usuario u = uservices.findById(Integer.parseInt(session.getAttribute("idUser").toString())).get();
 		producto.setUsuario(u);
 
 		// imagen validar si una imagen es cargada por
