@@ -63,11 +63,15 @@ public class HomeController {
 	// ALMACENA LOS DATOS DE LA ORDEN DATOS DE LA ORDEN
 	Orden orden = new Orden();
 
-	@RequestMapping("")
+	@GetMapping("")
 	public String mostar(Model modelo,HttpSession session) {
 		modelo.addAttribute("productos", servicios.listarProductos());
 		
 		LOGGER.info("obtener usuario {}",session.getAttribute("idUser"));
+		
+		//Session 
+		modelo.addAttribute("sesion",session.getAttribute("idUser"));
+		
 		return "usuario/home";
 	}
 
@@ -122,9 +126,12 @@ public class HomeController {
 	//PARA QUE SE MANTENGAN LOS DATOS SIEMPRE USAR session.setAttribute en las 
 	// 
 	@GetMapping("/carritoListar")
-	public String productoHomes(HttpSession session) {
+	public String productoHomes(Model modelo, HttpSession session) {
 //		session.setAttribute("cart", detalles);
 //		session.setAttribute("orden", orden);
+		
+		//Session
+		modelo.addAttribute("sesion", session.getAttribute("idUser"));
 		return "usuario/carrito";
 	}
 
