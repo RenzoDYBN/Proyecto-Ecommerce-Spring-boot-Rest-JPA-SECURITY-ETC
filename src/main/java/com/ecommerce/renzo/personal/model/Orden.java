@@ -1,13 +1,14 @@
 package com.ecommerce.renzo.personal.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,15 +26,11 @@ public class Orden {
 	@ManyToOne
 	private Usuario usuario;
 	
-	@OneToOne(mappedBy="orden")
-	private DetalleOrden detalleorden;
-	
-	
-	
-	
+	@OneToMany(mappedBy="orden")
+	private List<DetalleOrden> detalleorden;
 	
 	public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, Double total, Usuario usuario,
-			DetalleOrden detalleorden) {
+			List<DetalleOrden> detalleorden) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -49,10 +46,10 @@ public class Orden {
 	public void setTotal(Double total) {
 		this.total = total;
 	}
-	public DetalleOrden getDetalleorden() {
+	public List<DetalleOrden> getDetalleorden() {
 		return detalleorden;
 	}
-	public void setDetalleorden(DetalleOrden detalleorden) {
+	public void setDetalleorden(List<DetalleOrden> detalleorden) {
 		this.detalleorden = detalleorden;
 	}
 	public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, Usuario usuario) {

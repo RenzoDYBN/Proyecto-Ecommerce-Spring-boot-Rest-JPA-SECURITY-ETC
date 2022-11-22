@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ecommerce.renzo.personal.model.Producto;
+import com.ecommerce.renzo.personal.model.Usuario;
 
 public interface ProductoService  {
 	public Producto save(Producto producto);
