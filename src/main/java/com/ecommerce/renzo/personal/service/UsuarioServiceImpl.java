@@ -1,8 +1,12 @@
 package com.ecommerce.renzo.personal.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.renzo.personal.model.Usuario;
@@ -30,5 +34,12 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	public Optional<Usuario> findByEmail(String email) {
 		return urepositorio.findByEmail(email);
 	}
+
+	@Override
+	public List<Usuario> findAll() {
+		
+		return urepositorio.findAll();
+	}
+
 
 }

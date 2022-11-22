@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +35,8 @@ public class UsuarioController {
 	@Autowired
 	private IOrdenService ordenService;
 	
-	@Autowired
-	private ProductoService prodservice;
+	BCryptPasswordEncoder passEconder = new BCryptPasswordEncoder();
+	
 	
 	@GetMapping("/registro")
 	public String mostrar() {
@@ -46,7 +47,7 @@ public class UsuarioController {
 	public String registrar(Usuario usuario) {
 		logger.info("Usuario registro {}", usuario);
 		usuario.setTipo("USER");
-		
+		usuario.setPassword(passEconder.encode(usuario.getPassword()));
 		usuService.save(usuario);
 		return "redirect:/";
 	}
@@ -58,11 +59,11 @@ public class UsuarioController {
 		return "usuario/login";
 	}
 	
-	@PostMapping("/acceder")
+	@GetMapping("/acceder")
 	public String acceder(Usuario usuario, HttpSession session){
 		logger.info("acceso {}",usuario);
 		
-		Optional<Usuario> user = usuService.findByEmail(usuario.getEmail());
+		Optional<Usuario> user = usuService.findById(Integer.parseInt(session.getAttribute("idUser").toString()));
 		logger.info("correo inf {}",user);
 		
 		//POR ESO ES BUENO TRABAJAR CON OPTIONAL SI HAY REGISTRO
